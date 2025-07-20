@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Johanna Get to Tanzania - Mission Trip Fundraiser</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff7043, #ab47bc, #42a5f5);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff7043, #ab47bc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .mission-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            border-left: 4px solid #42a5f5;
+        }
+
+        .mission-info h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mission-info h3::before {
+            content: "🌍";
+        }
+
+        .fundraiser-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fundraiser-card.completed {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
+
+        .fundraiser-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .fundraiser-name {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .fundraiser-name::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff7043, #ab47bc);
+            border-radius: 3px;
+        }
+
+        .fundraiser-bio {
+            color: #555;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+
+        .progress-section {
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            transition: width 0.5s ease;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.4) 50%, 
+                rgba(255,255,255,0) 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .progress-percentage {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .number-button {
+            aspect-ratio: 1;
+            border: 2px solid #3498db;
+            background: white;
+            color: #3498db;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .number-button:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .number-button.selected {
+            background: #27ae60;
+            border-color: #27ae60;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(39, 174, 96, 0.4);
+        }
+
+        .number-button.donated {
+            background: #7f8c8d;
+            border-color: #7f8c8d;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .donation-summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .donation-summary h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .payment-btn {
+            padding: 20px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .payment-btn:hover {
+            border-color: #3498db;
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.1);
+        }
+
+        .payment-btn.selected {
+            border-color: #27ae60;
+            background: #27ae60;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .payment-btn i {
+            font-size: 2rem;
+        }
+
+        .donate-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 10px rgba(39, 174, 96, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(39, 174, 96, 0.5);
+        }
+
+        .donate-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #e74c3c;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
+        }
+
+        .status-indicator {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .data-status {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+        
+        .retry-btn {
+            padding: 12px 25px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+        }
+        
+        .retry-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        
+        .payment-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .cors-warning {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .number-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .number-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .fundraiser-name {
+                font-size: 1.8rem;
+            }
+            
+            .fundraiser-bio {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-globe-africa"></i> Help Johanna Get to Tanzania</h1>
+            <h2>Mission Trip to Arusha • November 20-30, 2024</h2>
+            <div class="mission-info">
+                <h3>Our Mission</h3>
+                <p>We'll be ministering to over 107,000 children in Arusha, Tanzania and conducting projects at a local school (possibly painting classrooms, fixing desks, and other vital improvements to create a better learning environment).</p>
+                <p><strong>Your donation helps cover:</strong> Flights, accommodation, meals, project supplies, and materials for the children.</p>
+                <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #3498db;">
+                    <p><strong>"Pick A Number"</strong> to represent the donation amount that you would like to give (you can choose multiple numbers to get the sum of your choice). Afterwards, scroll to the bottom to select payment option and press "Next".</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fundraiser-card" id="fundraiserCard">
+            <div class="fundraiser-header">
+                <div class="fundraiser-name">Johanna</div>
+                <div class="fundraiser-bio" id="bioDisplay">Loading fundraiser information...</div>
+            </div>
+            
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="progress-text" id="progressText">Loading progress...</div>
+                <div class="progress-percentage" id="progressPercentage">Please wait</div>
+            </div>
+            
+            <div id="dataStatus" class="data-status">
+                <div class="loader"></div>
+                <p>Loading donation data...</p>
+            </div>
+            
+            <div class="number-grid" id="numberGrid" style="display: none;">
+                <!-- Numbers 1-80 will be generated here -->
+            </div>
+            
+            <div class="donation-summary" id="donationSummary" style="display: none;">
+                <h3>Selected Amount: $0</h3>
+            </div>
+            
+            <div class="payment-methods" id="paymentMethods" style="display: none;">
+                <div class="payment-btn" onclick="selectPayment('venmo')">
+                    <i class="fab fa-vimeo-v payment-icon"></i>
+                    Venmo: @ADJones1
+                </div>
+                <div class="payment-btn" onclick="selectPayment('cashapp')">
+                    <i class="fas fa-dollar-sign payment-icon"></i>
+                    CashApp: $VetCoach
+                </div>
+                <div class="payment-btn" onclick="selectPayment('paypal')">
+                    <i class="fab fa-paypal payment-icon"></i>
+                    PayPal
+                </div>
+                <div class="payment-btn" onclick="selectPayment('zelle')">
+                    <i class="fas fa-money-check-alt payment-icon"></i>
+                    Zelle: 512-585-4106
+                </div>
+            </div>
+            
+            <button class="donate-btn" onclick="processDonation()" disabled id="donateBtn" style="display: none;">
+                Next Step <i class="fas fa-arrow-right"></i>
+            </button>
+            
+            <div id="corsWarning" class="cors-warning" style="display: none;">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>CORS Issue Detected</strong></p>
+                <p>We're having trouble connecting to Google Sheets. For local testing, please:</p>
+                <ol style="text-align: left; padding-left: 20px; margin-top: 10px;">
+                    <li>Open your browser's developer tools (F12)</li>
+                    <li>Go to Network tab and disable CORS checks</li>
+                    <li>Refresh the page</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Complete Your Donation</h2>
+            <div id="paymentInfo"></div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left;">
+                <h4 style="margin-bottom: 15px; text-align: center;"><i class="fas fa-user-circle"></i> Donor Information</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
+                        <input type="text" id="donorName" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;" maxlength="100">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number *</label>
+                        <input type="tel" id="donorPhone" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;" maxlength="20">
+                    </div>
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Mailing Address *</label>
+                    <textarea id="donorAddress" required rows="3" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;" placeholder="Street Address, City, State, ZIP" maxlength="300"></textarea>
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px; color: #666; font-size: 0.95rem;"><i class="fas fa-info-circle"></i> After sending payment and filling out your information, click the button below to confirm your donation.</p>
+            <button onclick="confirmDonation()" id="confirmBtn" style="padding: 15px 30px; background: #2ecc71; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;">
+                <i class="fas fa-check-circle"></i> I've Sent Payment
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="success-message">
+                <h2 style="font-size: 2rem; margin-bottom: 15px;"><i class="fas fa-check-circle"></i> Thank You!</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 10px;">Your donation has been successfully recorded.</p>
+                <p style="font-size: 1.1rem;">Your support is making a difference in children's lives!</p>
+            </div>
+            <button onclick="closeModal()" style="padding: 15px 30px; background: #3498db; color: white; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;">
+                <i class="fas fa-arrow-left"></i> Back to Fundraiser
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Security Configuration
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzhTYFBnCOhr-MUHwDnxIRAksdGDLCh8lCTAEg8Qx-51R6cW8_QOmPe4jRkArxWJ1F2YQ/exec';
+        
+        // Fundraiser data - stored in Google Sheets
+        let fundraiserData = {
+            name: "Johanna",
+            bio: "I'm passionate about serving others and making a difference in the lives of children. This Tanzania mission is close to my heart!",
+            raised: 0,
+            goal: 3500,
+            donatedNumbers: [], // Array of donated numbers
+            completed: false
+        };
+
+        let selectedNumbers = [];
+        let selectedPayment = '';
+        let isDataLoaded = false;
+
+        // Initialize page
+        async function init() {
+            await loadFundraiserData();
+            setupEventListeners();
+        }
+
+        // Load fundraiser data from Google Sheets
+        async function loadFundraiserData() {
+            showLoader();
+            
+            try {
+                const response = await fetch(SCRIPT_URL + '?action=getState');
+                
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data && data.success) {
+                    fundraiserData = data;
+                    displayFundraiserData();
+                } else {
+                    throw new Error(data.error || 'Failed to load fundraiser data');
+                }
+            } catch (error) {
+                console.error('Error loading fundraiser data:', error);
+                
+                // For demo purposes, use mock data
+                useMockData();
+            }
+        }
+
+        // Use mock data when Google Sheets is unavailable
+        function useMockData() {
+            console.log("Using mock data for demonstration");
+            fundraiserData = {
+                name: "Johanna",
+                bio: "I'm passionate about serving others and making a difference in the lives of children. This Tanzania mission is close to my heart!",
+                raised: 1250,
+                goal: 3500,
+                donatedNumbers: [5, 10, 15, 20, 25, 30, 35, 40],
+                completed: false
+            };
+            
+            displayFundraiserData();
+            
+            document.getElementById('dataStatus').innerHTML = `
+                <div class="status-indicator">
+                    <i class="fas fa-exclamation-triangle"></i> Using demo data
+                </div>
+                <p>Google Sheets connection failed - using demonstration data</p>
+            `;
+        }
+
+        function showLoader() {
+            document.getElementById('dataStatus').innerHTML = `
+                <div class="loader"></div>
+                <p>Loading donation data...</p>
+            `;
+            document.getElementById('numberGrid').style.display = 'none';
+            document.getElementById('donationSummary').style.display = 'none';
+            document.getElementById('paymentMethods').style.display = 'none';
+            document.getElementById('donateBtn').style.display = 'none';
+            document.getElementById('corsWarning').style.display = 'none';
+        }
+
+        function displayFundraiserData() {
+            // Update bio and progress
+            document.getElementById('bioDisplay').textContent = fundraiserData.bio;
+            updateProgress();
+            
+            // Generate number grid
+            generateNumberGrid();
+            
+            // Show UI elements
+            document.getElementById('dataStatus').style.display = 'none';
+            document.getElementById('numberGrid').style.display = 'grid';
+            document.getElementById('donationSummary').style.display = 'block';
+            document.getElementById('paymentMethods').style.display = 'grid';
+            document.getElementById('donateBtn').style.display = 'block';
+            
+            // Update donation summary
+            updateDonationSummary();
+            
+            // Check if goal is reached
+            if (fundraiserData.raised >= fundraiserData.goal) {
+                document.getElementById('fundraiserCard').classList.add('completed');
+                document.getElementById('numberGrid').style.display = 'none';
+                document.getElementById('paymentMethods').style.display = 'none';
+                document.getElementById('donateBtn').style.display = 'none';
+                document.getElementById('donationSummary').innerHTML = `
+                    <div class="success-message">
+                        <h2><i class="fas fa-trophy"></i> Goal Reached!</h2>
+                        <p>Thank you for helping Johanna get to Tanzania!</p>
+                    </div>
+                `;
+            }
+            
+            isDataLoaded = true;
+        }
+
+        function generateNumberGrid() {
+            const grid = document.getElementById('numberGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 1; i <= 80; i++) {
+                const button = document.createElement('div');
+                button.className = 'number-button';
+                button.textContent = i;
+                button.title = `Donate $${i}`;
+                
+                if (fundraiserData.donatedNumbers.includes(i)) {
+                    button.classList.add('donated');
+                    button.style.pointerEvents = 'none';
+                } else if (selectedNumbers.includes(i)) {
+                    button.classList.add('selected');
+                }
+                
+                button.onclick = () => toggleNumber(i);
+                grid.appendChild(button);
+            }
+        }
+
+        function toggleNumber(number) {
+            if (fundraiserData.donatedNumbers.includes(number)) return;
+            
+            const index = selectedNumbers.indexOf(number);
+            if (index > -1) {
+                selectedNumbers.splice(index, 1);
+            } else {
+                selectedNumbers.push(number);
+            }
+            
+            generateNumberGrid();
+            updateDonationSummary();
+        }
+
+        function updateDonationSummary() {
+            const total = selectedNumbers.reduce((sum, num) => sum + num, 0);
+            document.getElementById('donationSummary').innerHTML = `<h3>Selected Amount: $${total}</h3>`;
+            
+            const donateBtn = document.getElementById('donateBtn');
+            if (selectedNumbers.length === 0) {
+                donateBtn.textContent = 'Select numbers to donate';
+                donateBtn.disabled = true;
+            } else if (!selectedPayment) {
+                donateBtn.textContent = 'Select a payment method';
+                donateBtn.disabled = true;
+            } else {
+                donateBtn.textContent = `Donate $${total} with ${selectedPayment.charAt(0).toUpperCase() + selectedPayment.slice(1)}`;
+                donateBtn.disabled = false;
+            }
+        }
+
+        function updateProgress() {
+            const percentage = Math.min((fundraiserData.raised / fundraiserData.goal) * 100, 100);
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `$${fundraiserData.raised} raised of $${fundraiserData.goal} goal`;
+            document.getElementById('progressPercentage').textContent = `${Math.round(percentage)}% funded`;
+        }
+
+        function selectPayment(method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+            updateDonationSummary();
+        }
+
+        function processDonation() {
+            if (selectedNumbers.length === 0 || !selectedPayment) return;
+            
+            const total = selectedNumbers.reduce((sum, num) => sum + num, 0);
+            showPaymentModal(selectedPayment, total);
+        }
+
+        function showPaymentModal(method, amount) {
+            const modal = document.getElementById('paymentModal');
+            const info = document.getElementById('paymentInfo');
+            
+            const paymentMethods = {
+                'venmo': { name: 'Venmo', details: '@ADJones1' },
+                'cashapp': { name: 'CashApp', details: '$VetCoach' },
+                'paypal': { name: 'PayPal', details: 'Use the PayPal link' },
+                'zelle': { name: 'Zelle', details: '512-585-4106' }
+            };
+            
+            const payment = paymentMethods[method];
+            if (!payment) return;
+            
+            info.innerHTML = `
+                <div style="background: #e8f4f8; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px;">Send $${amount} to Johanna</h3>
+                    <p><strong>Payment Method:</strong> ${payment.name}</p>
+                    <p><strong>Send To:</strong> ${payment.details}</p>
+                    <p><strong>Memo:</strong> Tanzania Mission Trip</p>
+                </div>
+                <p style="margin-bottom: 20px; font-size: 1.1rem;"><i class="fas fa-lightbulb"></i> Please open your ${payment.name} app and send your donation now before completing this form.</p>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        async function confirmDonation() {
+            const donorName = document.getElementById('donorName').value.trim();
+            const donorPhone = document.getElementById('donorPhone').value.trim();
+            const donorAddress = document.getElementById('donorAddress').value.trim();
+
+            if (!donorName || !donorPhone || !donorAddress) {
+                alert('Please fill out all donor information fields.');
+                return;
+            }
+
+            const total = selectedNumbers.reduce((sum, num) => sum + num, 0);
+
+            // Show loading state
+            const confirmBtn = document.getElementById('confirmBtn');
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+            // Prepare donation data
+            const donation = {
+                action: 'donate',
+                amount: total,
+                numbers: selectedNumbers.join(","),
+                method: selectedPayment,
+                donorName,
+                donorPhone,
+                donorAddress
+            };
+
+            try {
+                // Submit to Google Sheets
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(donation)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Reset form and UI
+                    document.getElementById('donorName').value = '';
+                    document.getElementById('donorPhone').value = '';
+                    document.getElementById('donorAddress').value = '';
+                    
+                    // Close payment modal and show success
+                    document.getElementById('paymentModal').style.display = 'none';
+                    document.getElementById('successModal').style.display = 'block';
+                    
+                    // Refresh data
+                    setTimeout(() => {
+                        loadFundraiserData();
+                        selectedNumbers = [];
+                        selectedPayment = '';
+                    }, 3000);
+                } else {
+                    throw new Error(data.error || 'Failed to record donation');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Sent Payment';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        function setupEventListeners() {
+            // Setup admin access
+            const fundraiserName = document.querySelector('.fundraiser-name');
+            fundraiserName.addEventListener('click', function() {
+                // Admin access is not needed for this version
+            });
+        }
+
+        // Initialize the page
+        init();
+    </script>
+</body>
+</html>
